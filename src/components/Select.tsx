@@ -21,7 +21,7 @@ const Select = ({ children }: SelectProps) => {
     <SelectContext.Provider
       value={{ open, onOpen: setOpen, selected, onSelect: setSelected }}
     >
-      {children}
+      <SelectWrapper>{children}</SelectWrapper>
     </SelectContext.Provider>
   );
 };
@@ -33,13 +33,13 @@ Select.Trigger = function Trigger({ children }) {
     onOpen((prev: boolean) => !prev);
   };
 
-  return <button onClick={toggleList}>{children}</button>;
+  return <TriggerWrapper onClick={toggleList}>{children}</TriggerWrapper>;
 };
 
 Select.OptionList = function OptionList({ children }) {
   const { open } = useSelect();
 
-  return open && <ul>{children}</ul>;
+  return open && <OptionListWrapper>{children}</OptionListWrapper>;
 };
 
 Select.Option = function Option({ children, value }) {
@@ -59,13 +59,43 @@ Select.Option = function Option({ children, value }) {
 
   return (
     <OptionWrapper aria-selected={selected} onClick={selectOption}>
-      {children} {selected.includes(value) ? "selected!" : ""}
+      {children}
+      <span>{selected.includes(value) ? "✔️" : ""}</span>
     </OptionWrapper>
   );
 };
 
 export default Select;
 
+const SelectWrapper = styled.div`
+  position: relative;
+`;
+
+const TriggerWrapper = styled.button`
+  padding: 8px;
+`;
+
+const OptionListWrapper = styled.ul`
+  position: absolute;
+  top: 40px;
+  min-width: 150px;
+  border: 1px solid gray;
+  border-radius: 8px;
+  background-color: white;
+  overflow: hidden;
+`;
+
 const OptionWrapper = styled.li`
-  background: blue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  line-height: 16px;
+  list-style: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f6f6f6;
+  }
 `;
