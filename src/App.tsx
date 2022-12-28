@@ -1,8 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import Select from "./components/Select";
 
 const App = () => {
-  return <Main>fds</Main>;
+  return (
+    <Main>
+      <Select>
+        <Select.Trigger>Trigger</Select.Trigger>
+        <Select.OptionList>
+          <Select.Option value="value1">Value 1</Select.Option>
+          <Select.Option value="value2">Value 2</Select.Option>
+          <Select.Option value="value3">Value 3</Select.Option>
+        </Select.OptionList>
+      </Select>
+    </Main>
+  );
 };
 
 export default App;
